@@ -14,10 +14,16 @@ export class ProductService {
   }
 
   async findOne(id: number) {
-    return this.prisma.product.findUnique({
+    const product = await this.prisma.product.findUnique({
       where: { id },
       include: { category: true },
     });
+
+    if (!product) {
+      return { message: 'Product not found' };
+    }
+
+    return product;
   }
 
   async create(data: CreateProductDto) {
@@ -25,6 +31,12 @@ export class ProductService {
   }
 
   async update(id: number, data: UpdateProductDto) {
+    const product = await this.prisma.product.findUnique({ where: { id } });
+
+    if (!product) {
+      return { message: 'Product not found' };
+    }
+
     return this.prisma.product.update({
       where: { id },
       data,
@@ -32,8 +44,13 @@ export class ProductService {
   }
 
   async remove(id: number) {
-    return this.prisma.product.delete({
-      where: { id },
-    });
+    const product = await this.prisma.product.findUnique({ where: { id } });
+
+    if (!product) {
+      return { message: 'Product not found' };
+    }
+
+    await this.prisma.product.delete({ where: { id } });
+    return { message: 'Product deleted successfully' };
   }
 }
