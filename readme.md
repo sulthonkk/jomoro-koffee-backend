@@ -24,16 +24,16 @@ Backend system for Jomoro Koffee built with NestJS microservice architecture.
 - npm
 
 ## Database Setup
-Create these databases in MySQL:
+SQL files are available in the `/db` folder. Import each file to MySQL:
+- `db/jomoro_auth.sql` → database `jomoro_auth`
+- `db/jomoro_product.sql` → database `jomoro_product`
+- `db/jomoro_transaction.sql` → database `jomoro_transaction`
 
-jomoro_auth
-jomoro_product
-jomoro_transaction
-
-Insert admin user manually:
+Or create manually and run:
 ```sql
 INSERT INTO user (first_name, last_name, email, password, role)
 VALUES ('Admin', 'Jomoro', 'admin@jomoro.com', 'admin1234', 'ADMIN');
+```
 ```
 
 ## Running the Services
